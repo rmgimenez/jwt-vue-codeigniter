@@ -141,3 +141,5 @@
 #--------------------------------------------------------------------
 
 # curlrequest.shareOptions = true
+
+# JWT_SECRET = 'lkdlfknuwewiebi'
