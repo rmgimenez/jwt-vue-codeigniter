@@ -33,7 +33,7 @@ class AuthFilter implements FilterInterface
         $header = $request->getHeaderLine('Authorization');
         $token = null;
 
-        if (empty($header)) {
+        if (!empty($header)) {
             if (preg_match('/Bearer\s(\S+)/', $header, $matches)) {
                 $token = $matches[1];
             }
