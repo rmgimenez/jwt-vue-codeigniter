@@ -5,9 +5,9 @@
       <div class="row">
         <div class="col">
           <!-- input para digitar o nome do usuário -->
-          <input type="text" class="form-control" v-model="user" />
+          <input type="text" class="form-control" v-model="userInput" />
           <!-- input para digitar a senha -->
-          <input type="password" class="form-control" v-model="password" />
+          <input type="password" class="form-control" v-model="passwordInput" />
         </div>
       </div>
       <div class="row">
@@ -21,17 +21,27 @@
 
 <script setup>
 import { http } from './../axios';
+import { useAuthStore } from './../stores/auth';
 
-let user = '';
-let password = '';
+let userInput = '555';
+let passwordInput = '123456';
+
+const { user, token, setUser, setToken } = useAuthStore();
 
 const handleClickBtnEntrar = async () => {
   console.log('inicio');
 
-  http.post('/login', {
-    user: user,
-    password: password,
+  const resp = await http.post('/login', {
+    user: userInput,
+    password: passwordInput,
   });
+
+  setUser(userInput);
+
+  console.log('resp.data.token', resp.data.token);
+  setToken(resp.data.token);
+
+  console.log(token);
 
   // faz a requisição post passando o usuário e senha como parametro e evita problema com cors
 };
