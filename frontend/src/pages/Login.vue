@@ -12,7 +12,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary">Entrar</button>
+          <button class="btn btn-primary" v-on:click="handleClickBtnEntrar">Entrar</button>
         </div>
       </div>
     </div>
@@ -20,8 +20,35 @@
 </template>
 
 <script setup>
+// import axios
+import axios from 'axios';
+
 let user = '';
 let password = '';
+
+const handleClickBtnEntrar = async () => {
+  console.log('inicio');
+
+  // faz a requisição post passando o usuário e senha como parametro
+  // const response = await axios.post('http://localhost:8080/api/login', {
+  //   user: user,
+  //   password: password,
+  // });
+
+  // faz o fetch na api passando o user e password
+  const response = await fetch('http://localhost:8080/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user: user,
+      password: password,
+    }),
+  });
+
+  console.log(response);
+};
 </script>
 
 <style lang="scss" scoped></style>

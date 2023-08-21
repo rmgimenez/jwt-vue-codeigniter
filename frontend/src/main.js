@@ -4,6 +4,9 @@ import './style.css';
 import App from './App.vue';
 import { router } from './routes';
 
+// import axios
+import axios from 'axios';
+
 // import bootstrap 5
 import 'bootstrap/dist/css/bootstrap.min.css';
 

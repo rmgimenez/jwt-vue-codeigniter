@@ -11,11 +11,11 @@ class Login extends BaseController
     {
         // https://www.binaryboxtuts.com/php-tutorials/codeigniter-4-json-web-tokenjwt-authentication/
 
-        $email = $this->request->getVar('email');
+        $user = $this->request->getVar('user');
         $password = $this->request->getVar('password');
 
         // fazer a validação de usuário e senha
-        if (($email == 'teste@teste.com' && $password == '123456') == false) {
+        if (($user == '555' && $password == '123456') == false) {
             return $this->response->setJSON(['error' => 'Invalid username or password.']);
         }
 
@@ -29,7 +29,7 @@ class Login extends BaseController
             'sub' => 'Token de acesso',
             'iat' => $iat,
             'exp' => $exp,
-            'email' => 'testep@example.com',
+            'user' => '555',
         ];
 
         $token = JWT::encode($payload, $key, 'HS256');
