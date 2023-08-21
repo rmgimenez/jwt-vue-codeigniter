@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div>
+  <div class="container">
     <p>
       <!-- use the router-link component for navigation. -->
       <!-- specify the link by passing the `to` prop. -->
