@@ -20,8 +20,7 @@
 </template>
 
 <script setup>
-// import axios
-import axios from 'axios';
+import { http } from './../axios';
 
 let user = '';
 let password = '';
@@ -29,25 +28,12 @@ let password = '';
 const handleClickBtnEntrar = async () => {
   console.log('inicio');
 
-  // faz a requisição post passando o usuário e senha como parametro
-  // const response = await axios.post('http://localhost:8080/api/login', {
-  //   user: user,
-  //   password: password,
-  // });
-
-  // faz o fetch na api passando o user e password
-  const response = await fetch('http://localhost:8080/api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      user: user,
-      password: password,
-    }),
+  http.post('/login', {
+    user: user,
+    password: password,
   });
 
-  console.log(response);
+  // faz a requisição post passando o usuário e senha como parametro e evita problema com cors
 };
 </script>
 
