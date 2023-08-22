@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class Login extends BaseController
 {
@@ -58,7 +59,7 @@ class Login extends BaseController
     public function isValidToken()
     {
         $token = $this->request->getVar('token');
-        $decoded = JWT::decode($token, $this->key, null);
+        $decoded = JWT::decode($token, new Key($this->key, $this->algorithm));
         return $this->response->setJSON($decoded);
     }
 }

@@ -12,7 +12,11 @@
       </div>
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary" v-on:click="handleClickBtnEntrar">Entrar</button>
+          <button class="btn btn-primary" @click="handleClickBtnEntrar">Entrar</button>
+          <button class="btn btn-danger" @click="handleClickChecarLogin">
+            Chechar se está logado
+          </button>
+          <button class="btn btn-warning" @click="handleClickSair">Sair</button>
         </div>
       </div>
     </div>
@@ -42,7 +46,6 @@ const handleClickBtnEntrar = async () => {
 
     // seta o token no store
     authStore.setToken(resp.data.token);
-    console.log('logado');
 
     // checa se o token é válido
     const respValidacao = await http.post('/validar-token', {
@@ -53,6 +56,18 @@ const handleClickBtnEntrar = async () => {
   } else {
     console.log('erro');
   }
+};
+
+const handleClickChecarLogin = async () => {
+  console.log('checar login 1', authStore);
+  console.info(authStore.isUserLoggedIn);
+  console.log('checar login 2', authStore);
+};
+
+const handleClickSair = () => {
+  console.log('logout 1', authStore);
+  authStore.logout();
+  console.log('logout 2', authStore);
 };
 </script>
 
