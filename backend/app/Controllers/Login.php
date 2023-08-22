@@ -7,6 +7,19 @@ use Firebase\JWT\JWT;
 
 class Login extends BaseController
 {
+    // variável que armazena a key do JWT
+    private $key;
+
+    // variável que armazena o tipo de algorítimo utilizado
+    private $algorithm;
+
+    // construtor da classe
+    public function __construct()
+    {
+        $this->key = getenv('JWT_SECRET');
+        $this->algorithm = 'HS256';
+    }
+
     public function index()
     {
         // https://www.binaryboxtuts.com/php-tutorials/codeigniter-4-json-web-tokenjwt-authentication/
@@ -19,7 +32,6 @@ class Login extends BaseController
             return $this->response->setJSON(['error' => 'Invalid username or password.']);
         }
 
-        $key = getenv('JWT_SECRET');
         $iat = time();
         $exp = $iat + 3600;
 
@@ -32,7 +44,7 @@ class Login extends BaseController
             'user' => '555',
         ];
 
-        $token = JWT::encode($payload, $key, 'HS256');
+        $token = JWT::encode($payload, $this->key, $this->algorithm);
 
         $response = [
             'message' => 'Success',
@@ -40,5 +52,13 @@ class Login extends BaseController
         ];
 
         return $this->response->setJSON($response);
+    }
+
+    // verifica se o token enviado via post é valido
+    public function isValidToken()
+    {
+        $token = $this->request->getVar('token');
+        $decoded = JWT::decode($token, $this->key, null);
+        return $this->response->setJSON($decoded);
     }
 }

@@ -43,6 +43,13 @@ const handleClickBtnEntrar = async () => {
     // seta o token no store
     authStore.setToken(resp.data.token);
     console.log('logado');
+
+    // checa se o token é válido
+    const respValidacao = await http.post('/validar-token', {
+      token: resp.data.token,
+    });
+
+    console.log('respValidacao', respValidacao);
   } else {
     console.log('erro');
   }

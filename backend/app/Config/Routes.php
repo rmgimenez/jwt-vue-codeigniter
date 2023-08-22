@@ -33,6 +33,7 @@ $routes->get('/', 'Home::index');
 
 $routes->group('api', function ($routes) {
     $routes->post("login", "Login::index");
+    $routes->post("validar-token", "Login::isValidToken");
     $routes->get("users", "User::index", ['filter' => 'authFilter']);
 });
 
