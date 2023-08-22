@@ -26,24 +26,26 @@ import { useAuthStore } from './../stores/auth';
 let userInput = '555';
 let passwordInput = '123456';
 
-const { user, token, setUser, setToken } = useAuthStore();
+const authStore = useAuthStore();
 
 const handleClickBtnEntrar = async () => {
-  console.log('inicio');
-
   const resp = await http.post('/login', {
     user: userInput,
     password: passwordInput,
   });
 
-  setUser(userInput);
+  console.log(resp);
 
-  console.log('resp.data.token', resp.data.token);
-  setToken(resp.data.token);
+  if (resp.data.message == 'Success') {
+    // seta o usuário no store
+    authStore.setUser(userInput);
 
-  console.log(token);
-
-  // faz a requisição post passando o usuário e senha como parametro e evita problema com cors
+    // seta o token no store
+    authStore.setToken(resp.data.token);
+    console.log('logado');
+  } else {
+    console.log('erro');
+  }
 };
 </script>
 
