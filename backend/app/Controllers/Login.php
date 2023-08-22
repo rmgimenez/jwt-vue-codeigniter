@@ -56,10 +56,25 @@ class Login extends BaseController
     }
 
     // verifica se o token enviado via post é valido
-    public function isValidToken()
+    public function retornaTokenDecodificado()
     {
-        $token = $this->request->getVar('token');
-        $decoded = JWT::decode($token, new Key($this->key, $this->algorithm));
-        return $this->response->setJSON($decoded);
+        try {
+            $token = $this->request->getVar('token');
+            $decoded = JWT::decode($token, new Key($this->key, $this->algorithm));
+            return $this->response->setJSON($decoded);
+        } catch (\Throwable $th) {
+            return $this->response->setJSON(['message' => 'token inválido']);
+        }
+    }
+
+    public function isTokenValido()
+    {
+        try {
+            $token = $this->request->getVar('token');
+            $decoded = JWT::decode($token, new Key($this->key, $this->algorithm));
+            return $this->response->setJSON(true);
+        } catch (\Throwable $th) {
+            return $this->response->setJSON(false);
+        }
     }
 }

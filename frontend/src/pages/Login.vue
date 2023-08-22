@@ -17,6 +17,10 @@
             Chechar se está logado
           </button>
           <button class="btn btn-warning" @click="handleClickSair">Sair</button>
+          <button class="btn btn-warning" @click="handleClickDecodificarToken">
+            Decodificar token
+          </button>
+          <button class="btn btn-warning" @click="handleClickChecarToken">Checar Token</button>
         </div>
       </div>
     </div>
@@ -46,13 +50,6 @@ const handleClickBtnEntrar = async () => {
 
     // seta o token no store
     authStore.setToken(resp.data.token);
-
-    // checa se o token é válido
-    const respValidacao = await http.post('/validar-token', {
-      token: resp.data.token,
-    });
-
-    console.log('respValidacao', respValidacao);
   } else {
     console.log('erro');
   }
@@ -68,6 +65,22 @@ const handleClickSair = () => {
   console.log('logout 1', authStore);
   authStore.logout();
   console.log('logout 2', authStore);
+};
+
+const handleClickDecodificarToken = async () => {
+  const resp = await http.post('/decodificar-token', {
+    token: authStore.getToken,
+  });
+
+  console.log(resp);
+};
+
+const handleClickChecarToken = async () => {
+  const resp = await http.post('/checar-token', {
+    token: authStore.getToken,
+  });
+
+  console.log('checar token', resp);
 };
 </script>
 
